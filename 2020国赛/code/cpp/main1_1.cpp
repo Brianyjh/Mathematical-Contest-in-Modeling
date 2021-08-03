@@ -1,10 +1,12 @@
 #include <bits/stdc++.h>
+using namespace std;
+
 #define rep(i, a, n) for (int i = a; i < n; i++)
 #define per(i, a, n) for (int i = n - 1; i >= a; i--)
 #define fi first
 #define se second
 #define pb push_back
-using namespace std;
+
 typedef pair<int, int> pii;
 const int N = 35;
 const int INF = 0x3f3f3f3f;
@@ -544,7 +546,6 @@ void solve() {
 // 编译路径   cd  /Users/zzz123/Desktop/2020国赛/程序/cpp
 // ./a.out
 int main() {
-    close
     init();
     get_data();
     edge[edge.size() - 1].se ++; 
