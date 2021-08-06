@@ -1,50 +1,54 @@
 clc, clear, close;
 times = 100000;
-sun = [3,4];  hot =[9,9];    % Ë®µÄ»ù´¡ÏûºÄ¡¢Ê³ÎïµÄ»ù´¡ÏûºÄ
-water = [3,5];  food=[2,10];     % ÖØÁ¿¡¢ ¼Û¸ñ
+sun = [3, 4];  hot = [9, 9];    % æ°´çš„åŸºç¡€æ¶ˆè€—ã€é£Ÿç‰©çš„åŸºç¡€æ¶ˆè€—
+water = [3, 5];  food= [2, 10];  % é‡é‡ã€ä»·æ ¼
 pstay = 0.1;
 recpick = 0;
 recgo = 0;
 
-sun_sun = 2/7;sun_hot = 5/7;hot_sun = 5/11;hot_hot = 6/11;
+sun_sun = 2 / 7; sun_hot = 5 / 7;
+hot_sun = 5 / 11; hot_hot = 6 / 11;
 if rand(1) < 0.5
     towea = 0;    
 else
     towea = 1;
 end
-nowwea=towea;
+nowwea = towea;
 
-%% È¥²É¿ó    
+%% å»é‡‡çŸ¿ 
 
 for i = 1 : times
     move = 0;
-    tmp = rand(1);  pickday = getpickdays(tmp);     % »ñµÃ¸ù¾İ¾ùÔÈ·Ö²¼µÃµ½µÄ²É¿óÊ±¼ä
+    tmp = rand(1);  
+    pickday = getpickdays(tmp); % è·å¾—æ ¹æ®å‡åŒ€åˆ†å¸ƒå¾—åˆ°çš„é‡‡çŸ¿æ—¶é—´
     money = 10000;
     ans = -1;
     nowpack = 0;
     now = 1;
+    
     while now < 11
         nowwea = towea;
         rnd = rand(1);
-        towea = newdaywea(nowwea,rnd,sun_hot,hot_sun);  % »ñµÃÃ÷ÌìµÄÌìÆø
+        towea = newdaywea(nowwea, rnd, sun_hot, hot_sun);  % è·å¾—æ˜å¤©çš„å¤©æ°”
         
-        if move == 5 % ÒÆ¶¯ÖÁÖÕµã
+        if move == 5 % ç§»åŠ¨è‡³ç»ˆç‚¹ 
             ans = money;
             break;
         end
         
-        while move == 3 && pickday ~= 0 % µ½´ï¿ó²¢Íê³É²É¿óµÄ¹ı³Ì
+        while move == 3 && pickday ~= 0 % åˆ°è¾¾çŸ¿å¹¶å®Œæˆé‡‡çŸ¿çš„è¿‡ç¨‹
             pickday = pickday -1;
             
             if nowwea == 0 
-                money = money - sun(1) * water(2) * 3 - sun(2) * food(2) * 3;
-                nowpack  = nowpack + sun(1)*water(1)*3 + sun(2)*food(1)*3;
+                money = money - sun(1) * water(2) * 3 - sun(2) * food(2) * 3; 
+                nowpack  = nowpack + sun(1) * water(1) * 3 + sun(2) * food(1) * 3; 
             else 
-                money = money - hot(1) * water(2) * 3 - hot(2) * food(2) * 3;
-                nowpack  = nowpack + hot(1)*water(1)*3 + hot(2) * food(1) * 3;
+                money = money - hot(1) * water(2) * 3 - hot(2) * food(2) * 3; 
+                nowpack  = nowpack + hot(1) * water(1) * 3 + hot(2) * food(1) * 3; 
             end
-            money = money + 200;
-            now = now+1;
+            
+            money = money + 200; 
+            now = now + 1; 
         end    
         
         if money == 0 || nowpack > 1200
@@ -52,25 +56,28 @@ for i = 1 : times
             break;
         end
         
-        move = move + 1;
-        if nowwea ==0 
-            money = money - sun(1) * water(2)*2 - sun(2)*food(2)*2;
-            nowpack  = nowpack + sun(1)*water(1)*2 + sun(2)*food(1)*2;
+        move = move + 1; 
+        
+        if nowwea == 0 
+            money = money - sun(1) * water(2) * 2 - sun(2) * food(2) * 2;
+            nowpack  = nowpack + sun(1) * water(1) * 2 + sun(2) * food(1) * 2;
         else 
-            money = money - hot(1) * water(2)*2 - hot(2)*food(2)*2;
-            nowpack  = nowpack + hot(1)*water(1)*2 + hot(2)*food(1)*2;
+            money = money - hot(1) * water(2) * 2 - hot(2) * food(2) * 2;
+            nowpack  = nowpack + hot(1) * water(1) * 2 + hot(2) * food(1) * 2;
         end
-        now = now+1;    
-         if nowpack > 1200
-             ans = -1;
-             break;
-         end
+        
+        now = now + 1;    
+        if nowpack > 1200 
+            ans = -1;
+            break;
+        end
     end
     
     recpick(i) = ans;
 end
+
 % recpick(1)=[];      
-%% Ö±½Ó×ßµ½ÖÕµã
+%% ç›´æ¥èµ°åˆ°ç»ˆç‚¹
     
 for i = 1 : times
     move = 0;
@@ -78,12 +85,13 @@ for i = 1 : times
     ans = -1;
     nowpack = 0;
     now = 1;
+    
     while now < 11
         nowwea = towea;
         rnd = rand(1);
-        towea = newdaywea(nowwea, rnd, sun_hot, hot_sun);  % »ñµÃÃ÷ÌìµÄÌìÆø
+        towea = newdaywea(nowwea, rnd, sun_hot, hot_sun);  % è·å¾—æ˜å¤©çš„å¤©æ°”
         
-        if move == 3 % ÒÆ¶¯ÖÁÖÕµã
+        if move == 3 % ç§»åŠ¨è‡³ç»ˆç‚¹
             ans = money;
             break;
         end
@@ -94,14 +102,14 @@ for i = 1 : times
         end
         
         move = move + 1;
-        if nowwea ==0 
-            money = money - sun(1) * water(2)*2 - sun(2)*food(2)*2;
-            nowpack  = nowpack + sun(1)*water(1)*2 + sun(2)*food(1)*2;
+        if nowwea == 0 
+            money = money - sun(1) * water(2) * 2 - sun(2) * food(2) * 2;
+            nowpack  = nowpack + sun(1) * water(1) * 2 + sun(2) * food(1) * 2;
         else 
-            money = money - hot(1) * water(2)*2 - hot(2)*food(2)*2;
-            nowpack  = nowpack + hot(1)*water(1)*2 + hot(2)*food(1)*2;
+            money = money - hot(1) * water(2) * 2 - hot(2) * food(2) * 2;
+            nowpack  = nowpack + hot(1) * water(1) * 2 + hot(2) * food(1) * 2;
         end
-        now = now+1;    
+        now = now + 1;    
          if nowpack > 1200
              ans = -1;
              break;
@@ -111,17 +119,21 @@ for i = 1 : times
 end
 % recgo(1) = [];
 
-x=1:times;
+x = 1 : times;
+
 figure(1);
-plot(x, recpick, 'o', 'linewidth', 1.1, 'markersize', 4, 'markerfacecolor', [36,169,255]/255); 
+
+plot(x, recpick, 'o', 'linewidth', 1.1, 'markersize', 4, 'markerfacecolor', [36, 169, 255] / 255); 
 hold on;
-plot(x,recgo,'o','linewidth',1.1,'markersize',4,'markerfacecolor',[255,80,10]/255); hold on;
+plot(x, recgo, 'o', 'linewidth', 1.1, 'markersize', 4, 'markerfacecolor', [255, 80, 10] / 255); 
+hold on;
 grid on 
-title('Ä£Äâ');
-legend('²É¿ó','Ö±½ÓÖÁÖÕµã');
-xlabel('Ä£Äâ´ÎÊı');ylabel('Ê£ÓàµÄ½ğÇ®');
-axis([ 0 times 7500 10000]); % ÉèÖÃx¡¢yÖá¿Ì¶È·¶Î§
-set(gca,'linewidth',1.1,'fontsize',16,'fontname','times')
+
+title('æ¨¡æ‹Ÿ');
+legend('é‡‡çŸ¿', 'ç›´æ¥è‡³ç»ˆç‚¹');
+xlabel('æ¨¡æ‹Ÿæ¬¡æ•°'); ylabel('å‰©ä½™çš„é‡‘é’±');
+axis([ 0 times 7500 10000]); 
+set(gca, 'linewidth', 1.1, 'fontsize', 16, 'fontname', 'times')
 
 
 

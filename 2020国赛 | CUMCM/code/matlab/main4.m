@@ -1,110 +1,129 @@
-clc,clear,close;
+clc, clear, close;
 times = 10000;
-sun = [3,4];  hot =[9,9];storm=[10,10] ;   % Ë®µÄ»ù´¡ÏûºÄ¡¢Ê³ÎïµÄ»ù´¡ÏûºÄ
-water = [3,5];  food=[2,10];     % ÖØÁ¿¡¢ ¼Û¸ñ
+sun = [3, 4];  hot =[9, 9]; storm=[10, 10] ;  % æ°´çš„åŸºç¡€æ¶ˆè€—ã€é£Ÿç‰©çš„åŸºç¡€æ¶ˆè€—
+water = [3, 5];  food=[2, 10];     % é‡é‡ã€ ä»·æ ¼
 
 recpick = 0;
 recgo = 0;
-sun_sun = 2/7;sun_hot = 5/7;hot_sun = 5/11;hot_hot = 6/11;
+sun_sun = 2 / 7; sun_hot = 5 / 7;
+hot_sun = 5 / 11; hot_hot = 6 / 11;
+
 if rand(1) < 0.5
     towea = 0;    
 else
     towea = 1;
 end
-nowwea=towea;
-recminwater=0;recminfood=0;
 
-for i=1:times
+nowwea = towea;
+recminwater = 0;
+recminfood = 0; 
+
+for i = 1 : times
     money = 10000;
     nowwea = towea;
     rnd = rand(1);
-    towea = newdaywea(nowwea , rnd , sun_hot , hot_sun);  % »ñµÃÃ÷ÌìµÄÌìÆø
-    stormdays = randi(4);
+    towea = newdaywea(nowwea , rnd , sun_hot , hot_sun);  % è·å¾—æ˜å¤©çš„å¤©æ°”
+    
+    stormdays = randi(4); 
+
     days = 14 + stormdays;
-    stormday = randperm(days);stormday =  stormday(1 : stormdays);
+    stormday = randperm(days);
+    stormday = stormday(1 : stormdays);
     stormday = sort(stormday);
+    
     now = 0;
     move = 0;
     pick = 0;
-    nowwater = 240; nowfood =240;
-    miw = 10000;mif = 10000;
+    nowwater = 240; 
+    nowfood = 240;
+    miw = 10000;
+    mif = 10000;
     
     while now < days && move < 11
         nowwea = towea; rnd = rand(1);
-        towea = newdaywea(nowwea , rnd , sun_hot , hot_sun);  % »ñµÃÃ÷ÌìµÄÌìÆø
-        if ~isempty(stormday)
+        towea = newdaywea(nowwea , rnd , sun_hot , hot_sun);  % è·å¾—æ˜å¤©çš„å¤©æ°”
+        if ~isempty(stormday) 
             if now == stormday(1)
                 if move == 7 && (pick < 4)
                     nowwater = nowwater - storm(1) * 3;
                     nowfood = nowfood - storm(2) * 3;
                     pick = pick +1;
-                    miw=min(miw,nowwater); mif = min(mif,nowfood);
+                    miw = min(miw, nowwater); mif = min(mif, nowfood);
                 else 
                     nowwater = nowwater - storm(1);
                     nowfood = nowfood - storm(2);
-                    miw=min(miw,nowwater); mif = min(mif,nowfood);
+                    miw = min(miw, nowwater); mif = min(mif, nowfood);
                 end
                 now = now+ 1;
                 continue;
             end
         end
 
-        if nowwea == 0 % ÇçÌì
+        if nowwea == 0 % æ™´å¤©
             if move == 7 && (pick < 4)
                 nowwater = nowwater - sun(1) * 3;
                 nowfood = nowfood - sun(2) * 3;
                 pick = pick +1;
-                miw=min(miw,nowwater); mif = min(mif,nowfood);
+                miw = min(miw, nowwater); mif = min(mif, nowfood);
             elseif move == 5 
                 nowwater = nowwater - sun(1) * 2;
                 nowfood = nowfood - sun(2) * 2;
-                miw=min(miw,nowwater); mif = min(mif,nowfood);
+                miw = min(miw, nowwater); mif = min(mif, nowfood);
                 nowwater = 240;  nowfood = 240;
             else 
                 nowwater = nowwater - sun(1) * 2;
                 nowfood = nowfood - sun(2) * 2;
-                miw=min(miw,nowwater);  mif = min(mif,nowfood);
-                move = move +1;
+                miw = min(miw, nowwater);  mif = min(mif, nowfood);
+                move = move + 1;
             end
-        else % ¸ßÎÂ
+        else % é«˜æ¸©
             if move == 7 && (pick < 4)
                 nowwater = nowwater - hot(1) * 3;
                 nowfood = nowfood - hot(2) * 3;
-                pick = pick +1;
-                miw=min(miw,nowwater); mif = min(mif,nowfood);
+                pick = pick + 1;
+                miw = min(miw, nowwater); 
+                mif = min(mif, nowfood);
             elseif move == 5 
                 nowwater = nowwater - hot(1) * 2;
                 nowfood = nowfood - hot(2) * 2;
-                miw=min(miw,nowwater); mif = min(mif,nowfood);
+                miw = min(miw, nowwater); 
+                mif = min(mif, nowfood);
                 nowwater = 240;  nowfood = 240;
             else 
                 nowwater = nowwater - hot(1) * 2;
                 nowfood = nowfood - hot(2) * 2;
-                miw=min(miw,nowwater);  mif = min(mif,nowfood);
-                move = move +1;
+                miw = min(miw, nowwater);  
+                mif = min(mif, nowfood);
+                move = move + 1;
             end
         end
-       now = now+1;
+       now = now + 1;
     end
-    recminwater(i) = miw; recminfood(i) =mif;
+    recminwater(i) = miw; 
+    recminfood(i) = mif;
 end
 
 
-x = 1:length(recminwater);
-y = 1:length(recminwater);
-for i=1:length(x)
+x = 1 : length(recminwater);
+y = 1 : length(recminwater);
+for i = 1 : length(x)
     y(i) = 48;
 end
+
 figure(1);
-plot(x,recminwater,'o','linewidth',1.1,'markerfacecolor',[36,169,255]/255); hold on;
-plot(x,recminfood,'o','linewidth',1.1,'markerfacecolor',[255,80,10]/255); hold on;
-plot(x,y,'o','linewidth',1.1,'markerfacecolor','r'); hold on;
+plot(x, recminwater, 'o', 'linewidth', 1.1, 'markerfacecolor', [36, 169, 255] / 255); 
+hold on;
+plot(x, recminfood, 'o', 'linewidth', 1.1, 'markerfacecolor', [255, 80, 10] / 255); 
+hold on;
+plot(x, y, 'o', 'linewidth', 1.1, 'markerfacecolor', [200, 200, 200] / 255); 
+hold on;
 grid on 
-title('µÚËÄ¹Ø²ßÂÔÄ£Äâ');
-legend('Ë®×îÉÙÊ±¿Ì','Ê³Îï×îÉÙÊ±¿Ì','¿¼ÂÇµÄ×î»µÇé¿öÊ£Óà');
-xlabel('Ä£Äâ´ÎÊı');ylabel('Ê£ÓàÎï×ÊÏäÊı');
-axis([ 0 times 40 230]); % ÉèÖÃx¡¢yÖá¿Ì¶È·¶Î§
-set(gca,'linewidth',1.1,'fontsize',16,'fontname','times')
+
+title('ç¬¬å››å…³ç­–ç•¥æ¨¡æ‹Ÿ');
+legend('æ°´æœ€å°‘æ—¶åˆ»', 'é£Ÿç‰©æœ€å°‘æ—¶åˆ»', 'è€ƒè™‘çš„æœ€åæƒ…å†µå‰©ä½™');
+xlabel('æ¨¡æ‹Ÿæ¬¡æ•°'); ylabel('å‰©ä½™ç‰©èµ„ç®±æ•°');
+axis([ 0 times 40 240]); 
+set(gca, 'linewidth', 1.1, 'fontsize', 16, 'fontname', 'times')
 
 
 
