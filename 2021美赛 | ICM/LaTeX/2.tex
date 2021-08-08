@@ -1,0 +1,59 @@
+\documentclass{article}
+\usepackage[ruled]{algorithm2e}                 %算法排版样式1
+% \usepackage[ruled,vlined]{algorithm2e}          %算法排版样式2
+% \usepackage[linesnumbered,boxed]{algorithm2e}   %算法排版样式3
+
+\begin{document}
+% 例1
+\begin{algorithm}
+% \SetAlgoNoLine  %去掉之前的竖线
+    \caption{Calculate similarities between different artist} % 图表的标题
+    \KwIn{judge coefficient $\rho_{i}$,  hashtable $hash$,  influenceData $\chi_{ij}$,  Artist data $art_{ij}$} % 程序的输入数据
+    \KwOut{result $\vartheta_{ij}$ for i coefficient j's Iteration} % 程序的输出数据
+    \textbf{initialization} $iter, \vartheta_{ij}, record_{ij}, \tau,result_{i}$; \\
+    \For{$i=1;i \le \tau;$}
+    {
+        \For{$j=1;j \le iter;$}
+        {        
+            \While{1}
+            {
+                $tmp$=\textbf{randi(size($\chi_{ij}$))};\\
+                $id_{1}$=$tmp.id$,
+                $id_{2}$=$tmp.id$\\
+                \If{$id_{1}\neq id_{2}$}
+                {
+                        break
+                }
+            }
+            $a=$\textbf{hash}($id_{1}$), $b=$\textbf{hash}($id_{2}$)\\
+            $\upsilon_{1}=art_{a}$, $\upsilon_{2}=art_{b}$\\
+            $\vartheta_{ij}=$\textbf{Calculate($\upsilon_{1},\upsilon_{2}$)}\\
+            \eIf{$\vartheta_{ij}\geq \rho_{i}$}
+            {
+                $record_{ij}=1$ \\
+            }
+            {
+                $record_{ij}=0$ \\
+            }
+        }
+    }
+    \For{$i=1;i \le \tau;$}
+    {
+        \For{$j=1;j \le iter;$}
+        {
+            $result_{i}+=record_{ij}$
+        }        
+    }
+    return $\vartheta_{ij}$; \\
+\end{algorithm}
+
+\textbf{Calculate($\upsilon_{1},\upsilon_{2}$)}: Calculate similarities between vector data $\upsilon_{1},\upsilon_{2}$\\
+\textbf{randi($n$)}: is the function to get a random integer $x \in [1,n]$\\
+$\chi_{ij}$: $i$ means $i$ genre data set, $j$ is the number of indicators\\
+$\vartheta_{ij}$ is similarities for $i's$ coefficient $j's$ iteration\\
+$record_{ij}$ is the result after judge similarities for $i's$ coefficient $j's$ iteration\\
+$result_{i}$: is the success number for each $\rho_{i}$\\
+$\tau$ is index of $\rho$
+
+\end{document}
+

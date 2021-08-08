@@ -1,0 +1,50 @@
+\documentclass{article}
+\usepackage[ruled]{algorithm2e}                 %算法排版样式1
+% \usepackage[ruled,vlined]{algorithm2e}          %算法排版样式2
+% \usepackage[linesnumbered,boxed]{algorithm2e}   %算法排版样式3
+
+\begin{document}
+% 例1
+
+\begin{algorithm}[H]
+% \SetAlgoNoLine  %去掉之前的竖线
+    \caption{Calculate similarities between different genre} % 图表的标题
+    \KwIn{Data sets $\chi_{ij}$, $\psi_{ij}$ classified by genre after data cleaning} % 程序的输入数据
+    \KwOut{result $\vartheta_{1i}$,$\vartheta_{2i}$ for every loop} % 程序的输出数据
+    \textbf{initialization} iter, $\vartheta_{1i}, \vartheta_{2i}, \tau$; \\
+    \For{$i=1;i \le iter;$}
+    {
+        $\kappa_{1}$=\textbf{randi($\tau$)},$\kappa_{2}$=\textbf{randi($\tau$)}\\
+        \While{$\kappa_{1}= \kappa_{2}$}
+        {
+            $\kappa_{2}$=\textbf{randi($\tau$)}
+        }
+        $s_{1}$=\textbf{Get\_kind($\kappa_{1},\chi_{ij},\psi_{ij}$)},$s_{2}$=\textbf{Get\_kind($\kappa_{2},\chi_{ij},\psi_{ij}$)}\\
+        $\alpha_{11}$=\textbf{randi($size(s_{1})$)},
+        $\alpha_{12}$=\textbf{randi($size(s_{1})$)},
+        $\alpha_{2}$=\textbf{randi($size(s_{2})$)}\\
+        \While{$\kappa_{1}= \kappa_{2}$}
+        {
+            $\alpha_{12}$=\textbf{randi($size(s_{1})$)}
+        }
+        $\upsilon_{1}$=$s_{1}(\alpha_{11})$,
+        $\upsilon_{2}$=$s_{1}(\alpha_{12})$,
+        $\upsilon_{3}$=$s_{1}(\alpha_{2})$ \\
+        $\vartheta_{1,i}$=\textbf{Calculate($\upsilon_{1},\upsilon_{2}$)};\\
+        $\vartheta_{2,i}$=\textbf{Calculate($\upsilon_{1},\upsilon_{3}$)};\\
+    }
+    return $\vartheta_{1i}, \vartheta_{2i}$; \\
+\end{algorithm}
+
+\textbf{Calculate($\upsilon_{1},\upsilon_{2}$)}: Calculate similarities between vector data $\upsilon_{1},\upsilon_{2}$\\
+\textbf{randi($n$)}: is the function to get a random integer $x \in [1,n]$\\
+\textbf{Get\_kind($x,\chi_{ij},\psi_{ij},$)}: is the function to get i's genre data use $\chi_{ij}$ and $\psi_{ij}$\\
+$\chi_{ij}$: i means i genre data set, j means Article j data\\
+$\psi_{ij}$: i means i genre data set, j means j genre similarities matrix\\
+$\vartheta_{1i}$ is similarities between a and b ,which is same genre\\
+$\vartheta_{2i}$ is similarities between a and c ,which is different genre\\
+$\tau$ is total counts of genre
+
+
+\end{document}
+
