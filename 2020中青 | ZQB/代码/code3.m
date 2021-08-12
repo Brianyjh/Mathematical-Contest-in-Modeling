@@ -30,7 +30,7 @@ end
 save average_income_rate.mat average_income_rate
 for i = 1 : 10
     for j = 1 : length(day_income_rate{i})
-        risk{i} = day_income_rate{i} - average_income_rate(i);  % ��i֧��Ʊ���շ���=ÿ���������-ƽ��������
+        risk{i} = day_income_rate{i} - average_income_rate(i);
     end
 end
 for i = 1 : 10
